@@ -1,0 +1,11 @@
+/target
+.vscode/
+
+# Python cache in sub folders
+**/__pycache__/
+
+# Those are typically removed by the program
+# but just in case
+**/*.package
+**/*.ts4script
+**/*.zip
