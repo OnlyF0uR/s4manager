@@ -1,6 +1,6 @@
 # S4Manager
 
-Provides essential functionality for creating and maintaining Sims 4 Mods.
+Provides essential functionality for creating and maintaining Sims 4 Mods. Requires Python 3.7.x and uncompyle6 (for decompilation).
 
 ### Features
 
