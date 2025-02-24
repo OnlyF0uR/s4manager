@@ -66,7 +66,7 @@ async fn attempt_script_compilation(
     compile_all(&python_exe, &wd).await?;
 
     // Package (zip) the tuning files
-    let package_path = package_files(&wd, "scripts", "pyc", "ts4script").await?;
+    let package_path = package_files(&wd, "scripts\\__pycache__", "pyc", "ts4script").await?;
     println!("package_path: {:?}", package_path);
     // And move them to the S4 Mods directory
     fs::rename(&package_path, &dest).await?;
@@ -120,10 +120,15 @@ async fn package_files(
     while let Some(entry) = entries.next_entry().await? {
         let path = entry.path();
         if path.is_file() && path.extension().and_then(|ext| ext.to_str()) == Some(filter_ext) {
-            let file_name = path.file_name().unwrap().to_str().unwrap().to_string();
-            let file_data = tokio::fs::read(&path).await?;
+            let mut file_name = path.file_name().unwrap().to_str().unwrap().to_string();
+            if file_name.contains(".cpython-37") {
+                file_name = file_name.replace(".cpython-37", "");
+            }
 
-            let entry = ZipEntryBuilder::new(file_name.into(), Compression::Stored).build();
+            let zip_internal_path = format!("{}/{}", wd, file_name);
+
+            let file_data = tokio::fs::read(&path).await?;
+            let entry = ZipEntryBuilder::new(zip_internal_path.into(), Compression::Stored).build();
 
             zip_writer.write_entry_whole(entry, &file_data).await?;
         }

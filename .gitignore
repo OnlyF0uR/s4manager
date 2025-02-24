@@ -5,7 +5,6 @@
 **/__pycache__/
 
 # Those are typically removed by the program
-# but just in case
+# but just in case, the one for scripts are
+# already ignored by ignoring __pycache__
 **/*.package
-**/*.ts4script
-**/*.zip
