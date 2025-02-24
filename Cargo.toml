@@ -1,6 +1,6 @@
 [package]
 name = "s4manager"
-version = "0.1.1"
+version = "0.1.2"
 edition = "2021"
 
 [[bin]]
@@ -21,3 +21,4 @@ serde = { version = "1.0.217", features = ["derive"] }
 serde_json = "1.0.137"
 inquire = "0.7.5"
 async_zip = { version = "0.0.17", features = ["deflate", "tokio", "tokio-fs"] }
+futures-lite = { version = "2.6.0", default-features = false, features = ["std"] }

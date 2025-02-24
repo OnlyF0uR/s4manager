@@ -34,12 +34,18 @@ impl From<async_zip::error::ZipError> for CompileError {
 #[derive(Debug)]
 pub enum DecompileError {
     TokioError(tokio::io::Error),
+    InvalidTarget,
+    TargetFileNotFound,
+    BaseDirectoryNotFound,
 }
 
 impl std::fmt::Display for DecompileError {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         match self {
             DecompileError::TokioError(e) => e.fmt(f),
+            DecompileError::InvalidTarget => write!(f, "Invalid target"),
+            DecompileError::TargetFileNotFound => write!(f, "Target file not found"),
+            DecompileError::BaseDirectoryNotFound => write!(f, "Base directory not found"),
         }
     }
 }

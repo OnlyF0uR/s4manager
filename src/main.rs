@@ -17,7 +17,7 @@ struct Cli {
 #[derive(Subcommand)]
 enum Commands {
     Compile { input: String },
-    Decompile { directory: Option<String> },
+    Decompile { target: Option<String> },
     Configure,
 }
 
@@ -42,7 +42,7 @@ async fn main() {
                 Err(e) => eprintln!("Compilation failed: {}", e),
             };
         }
-        Commands::Decompile { directory } => {
+        Commands::Decompile { target } => {
             if Config::exists() {
                 if let Err(e) = load_config().await {
                     eprintln!("Failed to load config: {}", e);
@@ -53,7 +53,7 @@ async fn main() {
                 return;
             }
 
-            match decompile::execute(directory.as_ref().map(AsRef::as_ref)).await {
+            match decompile::execute(target.as_ref().map(AsRef::as_ref)).await {
                 Ok(_) => println!("Decompilation successful."),
                 Err(e) => eprintln!("Decompilation failed: {}", e),
             }

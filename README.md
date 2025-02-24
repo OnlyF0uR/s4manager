@@ -5,7 +5,8 @@ Provides essential functionality for creating and maintaining Sims 4 Mods.
 ### Features
 
 - [x] Compiling Mods (Async)
-- [ ] Decompilation of standard scripts
+- [x] Decompilation of standard scripts (Async)
+- [x] Decompilation of mods (Async)
 
 ### Example
 
