@@ -37,17 +37,18 @@ pub async fn execute(wd: String) -> Result<(), CompileError> {
         tasks.push(task);
     }
 
-    if has_sub_target(&wd, "tuning", "xml").await? {
-        let task = tokio::spawn(async move {
-            attempt_tuning_compilation(
-                &wd,
-                format!("{}\\{}_{}.package", final_folder, &author, &wd),
-            )
-            .await
-        });
+    // TODO: Add support for tuning?
+    // if has_sub_target(&wd, "tuning", "xml").await? {
+    //     let task = tokio::spawn(async move {
+    //         attempt_tuning_compilation(
+    //             &wd,
+    //             format!("{}\\{}_{}.package", final_folder, &author, &wd),
+    //         )
+    //         .await
+    //     });
 
-        tasks.push(task);
-    }
+    //     tasks.push(task);
+    // }
 
     for task in tasks {
         task.await.unwrap()?;
@@ -74,14 +75,10 @@ async fn attempt_script_compilation(
     Ok(())
 }
 
-async fn attempt_tuning_compilation(wd: &str, dest: String) -> Result<(), CompileError> {
-    // Package (zip) the tuning files
-    let package_path = package_files(&wd, "tuning", "xml", "package").await?;
-    // And move them to the S4 Mods directory
-    fs::rename(&package_path, &dest).await?;
-
-    Ok(())
-}
+// async fn attempt_tuning_compilation(wd: &str, dest: String) -> Result<(), CompileError> {
+//     // TODO: This
+//     Ok(())
+// }
 
 async fn compile_all(py_exe: &str, scripts_dir: &str) -> Result<(), CompileError> {
     let output = Command::new(py_exe)
